@@ -1,0 +1,164 @@
+/*———————————————————————————————————————————————————————————————*
+  Just some defaults and a gray container. No animation here.
+/*———————————————————————————————————————————————————————————————*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #333;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #333;
+  overflow: hidden;
+  color: #aaa;
+  font-family: sans-serif;
+  font-size: 2rem;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.text {
+  margin-top: 20vh;
+  text-align: center;
+}
+
+/*———————————————————————————————————————————————————————————————*
+  Just a pair of boxes styled and positioned in the middle of 
+  the container. No animation yet.
+/*———————————————————————————————————————————————————————————————*/
+.box {
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  cursor: pointer;
+  top: 40%;  
+  transform: rotateZ(0deg);
+}
+
+/*———————————————————————————————————————————————————————————————*
+  Red box with a transition.
+/*———————————————————————————————————————————————————————————————*/
+.red {
+  left: 200px;
+  background-color: rgba(234, 92, 70, 1.00);
+  transition: .8s; 
+}
+
+/*———————————————————————————————————————————————————————————————*
+  TRANSITIONS:
+  All you need for transitions is initial CSS values (as shown in 
+  the .red selector above), including a transition property with a
+  time set in seconds. Any time the CSS changes for that element, 
+  the changes will transition (though some properties will not 
+  transition, such as "display: none". Here, the changes occur when
+  you press down the mouse on the red box (see .red:active below).
+/*———————————————————————————————————————————————————————————————*/
+.red:active {
+  box-shadow: inset 0 0 10px 15px rgb(247, 171, 78);
+}
+
+/*———————————————————————————————————————————————————————————————*
+  ANIMATION PROPERTY:
+  .animate-red is a class. It has an animation property which has 
+  multiples values (some are optional):
+  - whirl     This is a name we chose. It matches @keyframes below.
+  - 2s        Length of animation in seconds.
+  - forwards  Optional. Animation freezes on last frame.
+                        Other options: (infinite, etc.).
+  - ease      Options. Animation is more gradual at start and end.
+                        Other options: (linear, etc.).
+
+  KEYFRAMES:
+  @keyframes has a name ("whirl" in this case) that matches the name 
+  given to the animation property in the class name above. In the 
+  block, we place as many steps as we want. Each indicates where 
+  the style of the element at that point in the animation. If the 
+  animation is a simple linear progress from start to end, you might 
+  have only two steps: "0%" and "100%" (or, alternatively, "from" 
+  and "to"). For more complex animations, use multiple steps and use 
+  percentages. These steps indicate what percent of the animation 
+  time (in the animation property) has passed when the specified 
+  rules apply. We don't have to specify every property and value at 
+  every step if those properties are not starting or ceasing to 
+  change at that moment. Notice there is only a background-color set 
+  at two points: at 50%,which is the last moment where the box is 
+  red, and at 100%, when the box is fully yellow. Between 50% and 
+  100%, the box gradually changes color. Before 50%, there is no 
+  change between the original red and the (same) red color specified 
+  at 50%. If there were no color specified at 50%, the box would 
+  gradually change throughout the entire animation (right from 0%).
+/*———————————————————————————————————————————————————————————————*/
+
+.animate-red {
+  animation: whirl 2s forwards ease;
+} /* We will add this class to the red box through an event listener in scripts.js */
+
+@keyframes whirl {
+  0%    { transform: scale(1) rotateZ(0deg); opacity: 1; } /* first changes, so we specify starting point */ 
+  50%   { background-color: rgba(234, 92, 70, 1.00); } /* color begins to change, so we start at original red */
+  93%   { transform: scale(0) rotateZ(3000deg); opacity: 0; }
+  100%  { transform: scale(2.3) rotateZ(3700deg); background-color: rgb(247, 171, 78); }
+}
+
+/*———————————————————————————————————————————————————————————————*
+  Let's add another animation to the red box. It will trigger any 
+  time you hover over .red and will continue infinitely until you 
+  stop hovering.
+/*———————————————————————————————————————————————————————————————*/
+.red:hover {
+  animation: pulsate .5s infinite ease-out;
+}
+
+@keyframes pulsate {
+  from { transform: scale(1); }
+  to   { transform: scale(1.2); }
+}
+
+
+/*———————————————————————————————————————————————————————————————*
+  Blue box with a transition (multiple properties changing here)
+/*———————————————————————————————————————————————————————————————*/
+.blue {
+  right: 200px;
+  background-color: rgba(94, 167, 249, 1.00);
+  border: solid 0px white;
+  transform: rotateZ(0deg);
+  transition: all .8s, border-radius .4s ease-out; /* You can have different times for different properties */
+  border-radius: 0%;
+  z-index: 2;
+}
+
+.blue:hover {
+  border: solid 100px white;
+  background-color: white;
+  transform: rotateZ(360deg);
+  border-radius: 50%;
+}
+
+.animate-blue {
+  animation: snowball 3s forwards ease;
+} /* We will add this class to the blue box through an event listener in scripts.js */
+
+@keyframes snowball {
+  0%    { 
+          border: solid 100px white; 
+          background-color: white; 
+          border-radius: 50%; 
+          top: 40%; right: 200px; } 
+  15%   { top: 10%; right: 350px; }
+  40%   { top: 90%; right: 500px;
+          transform: scale(1);  }
+  100%  { top: 40%; right: 45%;
+          border: solid 100px white; 
+          background-color: white; 
+          transform: scale(10); 
+          border-radius: 50%; }
+}
